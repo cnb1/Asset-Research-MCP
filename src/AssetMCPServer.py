@@ -2,15 +2,15 @@ from mcp.server import MCPServer
 
 from grounding import grounded_answer
 
-mcp = MCPServer("asset-news")   # <- this is what's missing
+mcp = MCPServer("asset-news")
+
 
 @mcp.tool()
 def analyze_asset_news(asset: str, question: str) -> str:
     """Answer a question about a stock or crypto asset using live web news.
 
-    Searches recent news for the asset via Google Search grounding, reasons
-    over the results, and returns a sourced answer. Ephemeral — each call
-    re-retrieves; nothing is stored.
+    Searches recent news for the asset via web search, reasons over the
+    results, and returns a sourced answer. Ephemeral — each call re-retrieves.
 
     Args:
         asset: Ticker or token symbol, e.g. "NVDA" or "HYPE".
@@ -23,8 +23,6 @@ def analyze_asset_news(asset: str, question: str) -> str:
 def get_asset_headlines(asset: str, hours: int = 48) -> str:
     """Summarize the most notable recent news for an asset.
 
-    Convenience wrapper for the "just tell me the latest" case.
-
     Args:
         asset: Ticker or token symbol, e.g. "BTC".
         hours: How far back to prioritize, in hours (default 48).
@@ -36,5 +34,7 @@ def get_asset_headlines(asset: str, hours: int = 48) -> str:
     )
     return grounded_answer(asset, question)
 
+
 if __name__ == "__main__":
-    mcp.run()
+    # Serve over HTTP instead of stdio, so it's reachable on the network.
+    mcp.run(transport="streamable-http")

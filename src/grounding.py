@@ -7,13 +7,6 @@ server.py.
 
 from openai import OpenAI
 
-from pathlib import Path
-from dotenv import load_dotenv
-
-# grounding.py lives in src/; .env lives in ../resources/.env
-ENV_PATH = Path(__file__).resolve().parent.parent / "resources" / ".env"
-load_dotenv(ENV_PATH)
-
 # web_search is a built-in Responses API tool; gpt-4o supports it.
 # Bump to a newer model (e.g. "gpt-5.1") if you want more search rounds.
 MODEL = "gpt-4o"
