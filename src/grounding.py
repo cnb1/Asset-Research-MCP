@@ -7,6 +7,10 @@ server.py.
 
 from openai import OpenAI
 
+from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv(Path(__file__).resolve().parent.parent / "resources" / ".env")
+
 # web_search is a built-in Responses API tool; gpt-4o supports it.
 # Bump to a newer model (e.g. "gpt-5.1") if you want more search rounds.
 MODEL = "gpt-4o"
